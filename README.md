@@ -1,4 +1,4 @@
-# Demo for Allinea/Arm Forge training July 16, 2020
+# Python Demo for Allinea/Arm Forge training July 16, 2020
 
 Demo based on spectral extraction code from DESI experiment.
 
@@ -7,7 +7,7 @@ More information about [DESI](https://www.desi.lbl.gov/).
 # Data
 
 Note that this demo requires DESI data files. Real data cannot be made public
-and we are looking for a compatiable set of simulated files. We expect these
+and we are looking for a compatible set of simulated files. We expect these
 files by July 9, 2020 (PI is currently on vacation).
 
 # To build your conda environment
@@ -24,7 +24,6 @@ conda install numpy scipy numba cudatoolkit pyyaml astropy
 pip install fitsio
 pip install speclite
 ```
-
 
 Required specs for the conda environment are also available in the
 `desi-requirements.txt` file.
@@ -45,4 +44,7 @@ module load allinea-reports
 perf-report srun -n 32 -c 2 spex --mpi -w 5760.0,7620.0,0.8 -i data/preproc-r0-00051060.fits -p data/psf-r0-00051060.fits -o $SCRATCH/frame-r0-00051060.fits
 ```
 
-This will write `.txt` and `.html` output files . 
+This will write `.txt` and `.html` output files which can be viewed in your
+text editor or browser, respectively.
+
+
