@@ -1,34 +1,48 @@
-# gpu_specter refactor README
+# Demo for Allinea/Arm Forge training July 16, 2020
 
-Scratch work for porting spectroperfectionism extractions to GPUs
+Demo based on spectral extraction code from DESI experiment.
 
-# Directions to run cpu version (currently only working version)
+More information about [DESI](https://www.desi.lbl.gov/).
 
-## Set up the environment; there are multiple correct ways to do this
+# Data
 
-```
-source /global/cfs/cdirs/desi/software/desi_environment.sh master
-git clone https://github.com/sjbailey/gpu_specter
-cd gpu_specter
-git checkout refactor
-export PATH=$(pwd)/bin:$PATH
-export PYTHONPATH=$(pwd)/py:$PYTHONPATH
-```
+Note that this demo requires DESI data files. Real data cannot be made public
+and we are looking for a compatiable set of simulated files. We expect these
+files by July 9, 2020 (PI is currently on vacation).
 
-## Get an interactive cpu node
+# To build your conda environment
 
-```
-salloc -N 1 -C haswell -t 60 -q interactive
-basedir=/global/cfs/cdirs/desi/spectro/redux/daily/
-```
-
-## Run spex (just over 1 min for a full frame)
+We may provide a pre-built environment that users can clone, but
+for the moment these directions will produce an environment with
+all required dependencies.
 
 ```
-time srun -n 32 -c 2 spex --mpi -w 5760.0,7620.0,0.8 \
--i $basedir/preproc/20200219/00051060/preproc-r0-00051060.fits \
--p $basedir/exposures/20200219/00051060/psf-r0-00051060.fits \
--o $SCRATCH/blat.fits
+module load python
+conda create --name armdemo --clone lazy-mpi4py
+source activate armdemo
+conda install numpy scipy numba cudatoolkit pyyaml astropy
+pip install fitsio
+pip install speclite
 ```
 
-# TODO: directions to run gpu version
+
+Required specs for the conda environment are also available in the
+`desi-requirements.txt` file.
+
+# To run at NERSC
+
+```
+source run_setup.sh
+srun -n 32 -c 2 spex --mpi -w 5760.0,7620.0,0.8 -i data/preproc-r0-00051060.fits -p data/psf-r0-00051060.fits -o $SCRATCH/frame-r0-00051060.fits
+```
+
+# To run with Allinea/Arm Forge Performance Reports
+
+https://docs.nersc.gov/development/performance-debugging-tools/performancereports/
+
+```
+module load allinea-reports
+perf-report srun -n 32 -c 2 spex --mpi -w 5760.0,7620.0,0.8 -i data/preproc-r0-00051060.fits -p data/psf-r0-00051060.fits -o $SCRATCH/frame-r0-00051060.fits
+```
+
+This will write `.txt` and `.html` output files . 
