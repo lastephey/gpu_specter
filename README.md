@@ -1,14 +1,30 @@
 # Python Demo for Allinea/Arm Forge training July 16, 2020
 
-Demo based on spectral extraction code from DESI experiment.
+Demo based on spectral extraction code from DESI experiment. 
+This is a Python CPU MPI code. The example will run 32 ranks
+but can be adjusted.
 
 More information about [DESI](https://www.desi.lbl.gov/).
 
 # Data
 
-Note that this demo requires DESI data files. Real data cannot be made public
-and we are looking for a compatible set of simulated files. We expect these
-files by July 9, 2020 (PI is currently on vacation).
+Note that real DESI data cannot be shared, so we are using
+simulated data for this demo kindly provided by Stephen
+Bailey.
+
+The data files are too large to be hosted on github so you
+will find them on Cori at `/global/cscratch1/sd/stephey/desi/examples/`.
+
+Once you have cloned this repo, you'll need to create a folder
+called `data` and copy the desi data files into it:
+
+``` 
+cd gpu_specter
+mkdir data
+cd data
+cp /global/cscratch1/sd/stephey/desi/examples/*.fits .
+
+```
 
 # To build your conda environment
 
@@ -32,7 +48,7 @@ Required specs for the conda environment are also available in the
 
 ```
 source run_setup.sh
-srun -n 32 -c 2 spex --mpi -w 5760.0,7620.0,0.8 -i data/preproc-r0-00051060.fits -p data/psf-r0-00051060.fits -o $SCRATCH/frame-r0-00051060.fits
+time srun -n 32 -c 2 spex -i data/preproc-r0-00000020.fits -p data/psfnight-r0-20101020.fits -o blat.fits --mpi
 ```
 
 # To run with Allinea/Arm Forge Performance Reports
@@ -41,7 +57,7 @@ https://docs.nersc.gov/development/performance-debugging-tools/performancereport
 
 ```
 module load allinea-reports
-perf-report srun -n 32 -c 2 spex --mpi -w 5760.0,7620.0,0.8 -i data/preproc-r0-00051060.fits -p data/psf-r0-00051060.fits -o $SCRATCH/frame-r0-00051060.fits
+perf-report srun -n 32 -c 2 spex -i data/preproc-r0-00000020.fits -p data/psfnight-r0-20101020.fits -o blat.fits --mpi
 ```
 
 This will write `.txt` and `.html` output files which can be viewed in your
