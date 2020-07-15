@@ -15,6 +15,13 @@ Bailey.
 The data files are too large to be hosted on github so you
 will find them on Cori at `/global/cscratch1/sd/stephey/desi/examples/`.
 
+To begin, log onto Cori and then:
+
+```
+cd $SCRATCH
+git clone https://github.com/lastephey/gpu_specter
+```
+
 Once you have cloned this repo, you'll need to create a folder
 called `data` and copy the desi data files into it:
 
@@ -28,8 +35,8 @@ cp /global/cscratch1/sd/stephey/desi/examples/*.fits .
 
 # To build your conda environment
 
-We may provide a pre-built environment that users can clone, but
-for the moment these directions will produce an environment with
+You will need to build a conda environment to run and profile
+this example. These directions will produce an environment with
 all required dependencies.
 
 ```
@@ -56,7 +63,7 @@ time srun -n 32 -c 2 spex -i data/preproc-r0-00000020.fits -p data/psfnight-r0-2
 https://docs.nersc.gov/development/performance-debugging-tools/performancereports/
 
 ```
-module load allinea-reports
+module load allinea-forge
 perf-report srun -n 32 -c 2 spex -i data/preproc-r0-00000020.fits -p data/psfnight-r0-20101020.fits -o blat.fits --mpi
 ```
 
