@@ -53,6 +53,8 @@ Required specs for the conda environment are also available in the
 
 # To run at NERSC
 
+First get an interactive node via salloc
+
 ```
 source run_setup.sh
 time srun -n 32 -c 2 spex -i data/preproc-r0-00000020.fits -p data/psfnight-r0-20101020.fits -o blat.fits --mpi
