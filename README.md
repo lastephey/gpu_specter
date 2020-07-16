@@ -53,11 +53,11 @@ Required specs for the conda environment are also available in the
 
 # To run at NERSC
 
-First get an interactive node via salloc
+First get an interactive KNL node via salloc
 
 ```
 source run_setup.sh
-time srun -n 32 -c 2 spex -i data/preproc-r0-00000020.fits -p data/psfnight-r0-20101020.fits -o blat.fits --mpi
+time srun -n 68 -c 4 spex -i data/preproc-r0-00000020.fits -p data/psfnight-r0-20101020.fits -o blat.fits --mpi
 ```
 
 # To run with Allinea/Arm Forge Performance Reports
@@ -66,7 +66,7 @@ https://docs.nersc.gov/development/performance-debugging-tools/performancereport
 
 ```
 module load allinea-forge
-perf-report srun -n 32 -c 2 spex -i data/preproc-r0-00000020.fits -p data/psfnight-r0-20101020.fits -o blat.fits --mpi
+perf-report srun -n 68 -c 4 spex -i data/preproc-r0-00000020.fits -p data/psfnight-r0-20101020.fits -o blat.fits --mpi
 ```
 
 This will write `.txt` and `.html` output files which can be viewed in your
